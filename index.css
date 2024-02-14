@@ -1,0 +1,19 @@
+body {
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+}
+ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+}
+li {
+    margin: 0 10px;
+}
+
