@@ -1,8 +1,14 @@
 body {
-    background-color: antiquewhite;
+    background-color: rgb(44, 117, 71);
     display: flex;
     justify-content: center;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+h1 {
+    font-size: 5em;
+    margin: 0;
 }
 nav {
     display: flex;
@@ -12,8 +18,26 @@ ul {
     list-style-type: none;
     display: flex;
     justify-content: space-between;
+    font-size: 1.5em;
+    margin: ;
 }
 li {
     margin: 0 10px;
+}
+a{
+    color: white;
+    text-decoration: none;
+}
+.memory {
+    background-color: rgb(43, 43, 157);
+    font-size: 2em;
+    text-transform: uppercase;
+    color: white;
+}
+button {
+    height: 3em;
+    width:5em;
+    font-size: .5em;
+    letter-spacing: .1em;
 }
 
