@@ -9,6 +9,7 @@ body {
 h1 {
     font-size: 5em;
     margin: 0;
+    display: inline-block;
 }
 nav {
     display: flex;
@@ -19,7 +20,7 @@ ul {
     display: flex;
     justify-content: space-between;
     font-size: 1.5em;
-    margin: ;
+    
 }
 li {
     margin: 0 10px;
@@ -31,13 +32,42 @@ a{
 .memory {
     background-color: rgb(43, 43, 157);
     font-size: 2em;
-    text-transform: uppercase;
     color: white;
 }
 button {
     height: 3em;
     width:5em;
     font-size: .5em;
-    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+/* start of tic-tac-toe game*/
+td {
+    border : 2px solid white;
+    height: 200px;
+    width: 200px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 70px;
+    cursor: pointer;
+    background-color: rgb(169, 204, 135);
+}
+table {
+    border-collapse: collapse;
+    left: 50%;
+}
+.endgame {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: rgba(205, 133, 63, 0.8);
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-size: 2em;
 }
 
