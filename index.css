@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(44, 117, 71);
+    background-color: rgb(224, 167, 60);
     display: flex;
     justify-content: center;
     text-align: center;
@@ -70,4 +70,25 @@ table {
     color: white;
     font-size: 2em;
 }
+/*simon css*/
+#red {
+    background-color: red;
+    height: 250px;
+    width: 250px;
 
+}
+#blue {
+    background-color: blue;
+    height: 250px;
+    width: 250px;
+}
+#green {
+    background-color: green;
+    height: 250px;
+    width: 250px;
+}
+#yellow {
+    background-color: yellow;
+    height: 250px;
+    width: 250px;
+}

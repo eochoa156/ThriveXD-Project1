@@ -1,4 +1,5 @@
 var ogBoard;
+
 const huPlayer = 'X';
 const aiPlayer = 'O';
 const winCombos = [
@@ -16,7 +17,7 @@ const cells = document.querySelectorAll('.cell');
 startGame();
 
 function startGame() {
-    document.querySelector('.endgame').computedStyleMap.display = 'none';
+    document.querySelector('.endgame').style.display = 'none';
     ogBoard = Array.from(Array(9).keys());
     for (var i = 0; i < cells.length; i++) {
         cells[i].innerText = '';
@@ -55,12 +56,12 @@ function checkWin(board, player) {
 function gameOver(gameWon) {
     for (let index of winCombos[gameWon.index]) {
         document.getElementById(index).style.backgroundColor =
-            gameWon.player == huPlayer ? "blue" : "red";//add new colors here that will match the style of doc
-	}
-	for (var i = 0; i < cells.length; i++) {
-		cells[i].removeEventListener('click', turnClick, false);
-	}
-    declareWinner(gameWon.player == huPlayer ? "You win!" : "You lose")
+            gameWon.player == huPlayer ? "blue" : "red";
+    }
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].removeEventListener('click', turnClick, false);
+    }
+    declareWinner(gameWon.player == huPlayer ? "You win!" : "You lose!");
 }
 
 function declareWinner(who) {

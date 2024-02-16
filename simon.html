@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Game</title>
+    <title>Simon</title>
     <link href = 'index.css' rel = 'stylesheet'>
 </head>
 <body>
@@ -16,10 +16,18 @@
                 <li><a href = 'index.html'>Home</a></li>
             </ul>
         </nav>
-        <div>
-            <h2>Snake</h2>
-            <script src = 'index.js'></script>  
+        <div class = 'gamepad'>
+            <div>
+                <button class = 'simonButton' id = "red"></button>
+                <button class = 'simonButton' id = "blue"></button>
+            </div>
+            <div>
+                <button class = 'simonButton' id = "green"></button>
+                <button class = 'simonButton' id = "yellow"></button>
+            </div>
         </div>
+        <button onClick = 'startGame()'>Reset</button>
+        <script src = 'simon.js'></script>
     </div>
 </body>
 </html>
