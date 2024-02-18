@@ -36,7 +36,9 @@ ol {
     margin: auto;
     text-transform: none;
 }
-
+h2{
+    top: 40%;
+}
 /* start of tic-tac-toe game*/
 td {
     border : 2px solid white;
@@ -148,7 +150,7 @@ table {
     width: 485px;
     border-radius: 100%;
     position: absolute;
-    top: 60%;
+    top: 65%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -168,7 +170,6 @@ table {
     z-index: 9999;
     border: 3px solid black;
 }
-
 #startButton {
     margin-bottom: 10px;
     height: 25px;
