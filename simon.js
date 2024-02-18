@@ -1,6 +1,19 @@
+const green = document.querySelector('.top-left-panel');
+const yellow = document.querySelector('.top-right-panel');
+const red = document.querySelector('.bottom-left-panel');
+const blue = document.querySelector('.bottom-right-panel');
+
+// Define the buttons array by querying the DOM for the color buttons
+const buttons = [
+    document.getElementById('red'),
+    document.getElementById('blue'),
+    document.getElementById('green'),
+    document.getElementById('yellow')
+];
+
+
 var simonSequence = [];
 var playerSequence = [];
-var buttons = document.getElementsByClassName('simonButton');
 
 function simonTurn() {
     var color = ['red', 'blue', 'green', 'yellow'];
@@ -10,19 +23,40 @@ function simonTurn() {
     displaySequence();
 }
 
-function displaySequence() {
-    var i = 0;
-    var interval = setInterval(function() {
-        lightUpButton(simonSequence[i]);
-        i++;
-        if (i >= simonSequence.length) {
-            clearInterval(interval);
+async function displaySequence() {
+    for (let color of simonSequence) {
+        let panel;
+        switch (color) {
+            case 'red':
+                panel = red;
+                break;
+            case 'blue':
+                panel = blue;
+                break;
+            case 'green':
+                panel = green;
+                break;
+            case 'yellow':
+                panel = yellow;
+                break;
         }
-    }, 1000);
+        await flash(panel); // Wait for the flash animation to complete
+        await delay(1000); // Wait for 1 second before displaying the next color
+    }
 }
 
-function lightUpButton(color) {
-    console.log("Lighting up button:", color);
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const flash = (panel) => {
+    return new Promise((resolve, reject) => {
+        panel.classList.add('active');
+        setTimeout(() => {
+            panel.classList.remove('active');
+            resolve();
+        }, 1000);
+    });
 }
 
 function checkSequence() {
@@ -51,7 +85,5 @@ for (var i = 0; i < buttons.length; i++) {
     });
 }
 
-// Start the game
+// Start simon's turn
 simonTurn();
-
-
