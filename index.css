@@ -13,8 +13,10 @@ h1 {
 }
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Center the navigation bar horizontally */
+    margin-bottom: 20px; /* Add margin to the bottom for spacing */
 }
+
 ul {
     list-style-type: none;
     display: flex;
@@ -29,22 +31,12 @@ a{
     color: white;
     text-decoration: none;
 }
-.memory {
-    background-color: rgb(43, 43, 157);
-    font-size: 2em;
-    color: white;
-}
-button {
-    height: 3em;
-    width:5em;
-    font-size: .5em;
-    text-transform: uppercase;
-}
+
 /* start of tic-tac-toe game*/
 td {
     border : 2px solid white;
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     text-align: center;
     vertical-align: middle;
     font-size: 70px;
@@ -53,8 +45,10 @@ td {
 }
 table {
     border-collapse: collapse;
-    left: 50%;
+    margin: auto; /* Add this line to center the table */
+    margin-top: 50px; /* Adjust margin-top as needed */
 }
+
 .endgame {
     display: none;
     position: fixed;
@@ -148,7 +142,12 @@ table {
     height: 485px;
     width: 485px;
     border-radius: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
+
 .startPad {
     background-color: grey;
     height: 150px;
