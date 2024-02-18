@@ -78,6 +78,7 @@ table {
     border: 3px solid black;
     cursor: pointer;
     display: none;
+    margin-top: 25px;
 }
 .panel:hover {
     border: 5px solid white;
@@ -85,23 +86,39 @@ table {
 .panel.active {
     border: none;
     box-shadow: 0 0 10px white;
-    filter: brightness(150%);
-    
+}
+#green.active {
+    filter: brightness(200%); /* Apply brightness increase for green panel */
+}
+
+#yellow.active {
+    filter: brightness(200%); /* Apply brightness increase for yellow panel */
+}
+
+#red.active {
+    filter: brightness(200%); /* Apply brightness increase for red panel */
+}
+
+#blue.active {
+    filter: brightness(200%); /* Apply brightness increase for blue panel */
 }
 .top-panels {
     display: flex;
     flex-wrap: wrap;
     width: 450px;
     justify-content: center;
+    margin: auto;
     align-items: center;
 }
 .top-left-panel {
     border-top-left-radius: 200px;
     background-color: green;
+    margin-right: 10px;
 }
 .top-right-panel {
     border-top-right-radius: 200px;
     background-color: yellow;
+    margin-left: 10px;
 }
 .bottom-panels {
     display: flex;
@@ -109,17 +126,46 @@ table {
     width: 450px;
     justify-content: center;
     align-items: center;
+    margin: auto;
 }
 .bottom-left-panel {
     border-bottom-left-radius: 200px;
     background-color: red;
+    margin-right: 10px;
 }
 .bottom-right-panel {
     border-bottom-right-radius: 200px;
     background-color: blue;
+    margin-left: 10px;
 }
 .game-info {
     height: 50px;
     width: 100px;
     font-size: larger;
+}
+.gamePad {
+    background-color: black;
+    height: 485px;
+    width: 485px;
+    border-radius: 100%;
+}
+.startPad {
+    background-color: grey;
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    position: absolute;
+    top: 50%;
+    left: 49%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    border: 3px solid black;
+}
+
+#startButton {
+    margin-bottom: 10px; /* Adjust the spacing between the button and score */
 }

@@ -22,15 +22,19 @@ async function displaySequence() {
         switch (color) {
             case 'red':
                 panel = red;
+                redBoop.play();
                 break;
             case 'blue':
                 panel = blue;
+                blueBoop.play();
                 break;
             case 'green':
                 panel = green;
+                greenBoop.play();
                 break;
             case 'yellow':
                 panel = yellow;
+                yellowBoop.play();
                 break;
         }
         await flash(panel);
@@ -82,11 +86,37 @@ function updateScoreDisplay() {
     scoreDisplay.textContent = `Score: ${score}`;
 }
 
+const colorSounds = {
+    red: redBoop,
+    blue: blueBoop,
+    green: greenBoop,
+    yellow: yellowBoop
+};
+
 for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', function() {
         var clickedColor = this.id;
         playerSequence.push(clickedColor);
         console.log("Player's sequence:", playerSequence);
+
+        // Play corresponding sound
+        switch (clickedColor) {
+            case 'red':
+                redBoop.play();
+                break;
+            case 'blue':
+                blueBoop.play();
+                break;
+            case 'green':
+                greenBoop.play();
+                break;
+            case 'yellow':
+                yellowBoop.play();
+                break;
+            default:
+                console.log('Invalid color!');
+        }
+
         if (checkSequence()) {
             if (playerSequence.length === simonSequence.length) {
                 console.log("Correct sequence! Continuing the game.");
@@ -101,5 +131,17 @@ for (var i = 0; i < buttons.length; i++) {
         }
     });
 }
+
+
+var greenBoop = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3");
+var redBoop = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3");
+var yellowBoop = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3");
+var blueBoop = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3");
+
+redBoop.volume = .50;
+blueBoop.volume = 1;
+greenBoop.volume = 0.50;
+yellowBoop.volume = 1;
+
 
 simonTurn();
