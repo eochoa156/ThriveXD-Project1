@@ -1,16 +1,9 @@
-const green = document.querySelector('.top-left-panel');
-const yellow = document.querySelector('.top-right-panel');
-const red = document.querySelector('.bottom-left-panel');
-const blue = document.querySelector('.bottom-right-panel');
-
-// Define the buttons array by querying the DOM for the color buttons
 const buttons = [
     document.getElementById('red'),
     document.getElementById('blue'),
     document.getElementById('green'),
     document.getElementById('yellow')
 ];
-
 
 var simonSequence = [];
 var playerSequence = [];
@@ -40,8 +33,8 @@ async function displaySequence() {
                 panel = yellow;
                 break;
         }
-        await flash(panel); // Wait for the flash animation to complete
-        await delay(1000); // Wait for 1 second before displaying the next color
+        await flash(panel);
+        await delay(1000);
     }
 }
 
@@ -68,6 +61,27 @@ function checkSequence() {
     return true;
 }
 
+const startButton = document.getElementById('startButton');
+const scoreDisplay = document.getElementById('scoreDisplay');
+const panels = document.querySelectorAll('.panel');
+let score = 0;
+
+startButton.addEventListener('click', function() {
+    panels.forEach(panel => {
+        panel.style.display = 'block';
+    });
+
+    simonSequence = [];
+    playerSequence = [];
+    score = 0;
+    updateScoreDisplay();
+    simonTurn();
+});
+
+function updateScoreDisplay() {
+    scoreDisplay.textContent = `Score: ${score}`;
+}
+
 for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', function() {
         var clickedColor = this.id;
@@ -77,13 +91,15 @@ for (var i = 0; i < buttons.length; i++) {
             if (playerSequence.length === simonSequence.length) {
                 console.log("Correct sequence! Continuing the game.");
                 playerSequence = [];
+                score++;
+                updateScoreDisplay();
                 setTimeout(simonTurn, 1000);
             }
         } else {
             console.log('Game over!');
+            alert('Game Over!')
         }
     });
 }
 
-// Start simon's turn
 simonTurn();
