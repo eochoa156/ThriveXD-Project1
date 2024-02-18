@@ -31,6 +31,11 @@ a{
     color: white;
     text-decoration: none;
 }
+ol {
+    width: 300px;
+    margin: auto;
+    text-transform: none;
+}
 
 /* start of tic-tac-toe game*/
 td {
@@ -143,13 +148,12 @@ table {
     width: 485px;
     border-radius: 100%;
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
 .startPad {
-    background-color: grey;
+    background-color: lightgrey;
     height: 150px;
     width: 150px;
     border-radius: 100%;
@@ -166,5 +170,11 @@ table {
 }
 
 #startButton {
-    margin-bottom: 10px; /* Adjust the spacing between the button and score */
+    margin-bottom: 10px;
+    height: 25px;
+}
+#scoreDisplay {
+    color: rgba(189, 33, 33, 0.751);
+    font-size: 1em;
+    font-weight: bolder;
 }

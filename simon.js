@@ -7,15 +7,18 @@ const buttons = [
 
 var simonSequence = [];
 var playerSequence = [];
-
+//gives the possible choices to simon
 function simonTurn() {
     var color = ['red', 'blue', 'green', 'yellow'];
+    //randomizes the choice
     var randomColor = color[Math.floor(Math.random() * color.length)];
+    //pushes it to the array so it grows by one each of simon's turn
     simonSequence.push(randomColor);
     console.log("Simon's sequence:", simonSequence);
     displaySequence();
 }
 
+//allows the simon sqeuence to be shown to player using active panel and playing the boop
 async function displaySequence() {
     for (let color of simonSequence) {
         let panel;
@@ -41,7 +44,7 @@ async function displaySequence() {
         await delay(1000);
     }
 }
-
+//delays so it doesnesnt happen all at once
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -55,7 +58,7 @@ const flash = (panel) => {
         }, 1000);
     });
 }
-
+//checks if playerSequence matches simonSequence
 function checkSequence() {
     for (var i = 0; i < playerSequence.length; i++) {
         if (playerSequence[i] !== simonSequence[i]) {
@@ -81,7 +84,7 @@ startButton.addEventListener('click', function() {
     updateScoreDisplay();
     simonTurn();
 });
-
+//updates the score to the length of the player sequence
 function updateScoreDisplay() {
     scoreDisplay.textContent = `Score: ${score}`;
 }
@@ -92,7 +95,7 @@ const colorSounds = {
     green: greenBoop,
     yellow: yellowBoop
 };
-
+//each click from a player is stored and plays the sound
 for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', function() {
         var clickedColor = this.id;
@@ -116,7 +119,7 @@ for (var i = 0; i < buttons.length; i++) {
             default:
                 console.log('Invalid color!');
         }
-
+        //checks to see if player and simon squence are the same and allows game to continue
         if (checkSequence()) {
             if (playerSequence.length === simonSequence.length) {
                 console.log("Correct sequence! Continuing the game.");
@@ -125,6 +128,7 @@ for (var i = 0; i < buttons.length; i++) {
                 updateScoreDisplay();
                 setTimeout(simonTurn, 1000);
             }
+            //if not player gets an alert and game is stopped
         } else {
             console.log('Game over!');
             alert('Game Over!')
@@ -137,11 +141,5 @@ var greenBoop = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3
 var redBoop = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3");
 var yellowBoop = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3");
 var blueBoop = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3");
-
-redBoop.volume = .50;
-blueBoop.volume = 1;
-greenBoop.volume = 0.50;
-yellowBoop.volume = 1;
-
 
 simonTurn();

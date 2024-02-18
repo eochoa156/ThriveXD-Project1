@@ -1,251 +1,140 @@
-var simonSequence = [];
-var playerSequence = [];
-var buttons = document.getElementsByClassName('simonButton');
+var origBoard;
+const huPlayer = 'O';
+const aiPlayer = 'X';
+const winCombos = [
+	[0, 1, 2],
+	[3, 4, 5],
+	[6, 7, 8],
+	[0, 3, 6],
+	[1, 4, 7],
+	[2, 5, 8],
+	[0, 4, 8],
+	[6, 4, 2]
+]
 
-function simonTurn() {
-    var color = ['red', 'blue', 'green', 'yellow'];
-    var randomColor = color[Math.floor(Math.random() * color.length)];
-    simonSequence.push(randomColor);
-    console.log("Simon's sequence:", simonSequence);
-    displaySequence();
+const cells = document.querySelectorAll('.cell');
+startGame();
+
+function startGame() {
+	document.querySelector(".endgame").style.display = "none";
+	origBoard = Array.from(Array(9).keys());
+	for (var i = 0; i < cells.length; i++) {
+		cells[i].innerText = '';
+		cells[i].style.removeProperty('background-color');
+		cells[i].addEventListener('click', turnClick, false);
+	}
 }
 
-function displaySequence() {
-    var i = 0;
-    var interval = setInterval(function() {
-        lightUpButton(simonSequence[i]);
-        i++;
-        if (i >= simonSequence.length) {
-            clearInterval(interval);
-        }
-    }, 1000);
+function turnClick(square) {
+	if (typeof origBoard[square.target.id] == 'number') {
+		turn(square.target.id, huPlayer)
+		if (!checkWin(origBoard, huPlayer) && !checkTie()) turn(bestSpot(), aiPlayer);
+	}
 }
 
-function lightUpButton(color) {
-    var button = document.querySelector('.' + color);
-    button.classList.add('active');
-    setTimeout(function() {
-        button.classList.remove('active');
-    }, 1000);
+function turn(squareId, player) {
+	origBoard[squareId] = player;
+	document.getElementById(squareId).innerText = player;
+	let gameWon = checkWin(origBoard, player)
+	if (gameWon) gameOver(gameWon)
 }
 
-
-
-
-function checkSequence() {
-    for (var i = 0; i < playerSequence.length; i++) {
-        if (playerSequence[i] !== simonSequence[i]) {
-            return false;
-        }
-    }
-    return true;
+function checkWin(board, player) {
+	let plays = board.reduce((a, e, i) =>
+		(e === player) ? a.concat(i) : a, []);
+	let gameWon = null;
+	for (let [index, win] of winCombos.entries()) {
+		if (win.every(elem => plays.indexOf(elem) > -1)) {
+			gameWon = {index: index, player: player};
+			break;
+		}
+	}
+	return gameWon;
 }
 
-for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', function() {
-        var clickedColor = this.id;
-        playerSequence.push(clickedColor);
-        console.log("Player's sequence:", playerSequence);
-        if (checkSequence()) {
-            if (playerSequence.length === simonSequence.length) {
-                console.log("Correct sequence! Continuing the game.");
-                playerSequence = [];
-                setTimeout(simonTurn, 1000);
-            }
-        } else {
-            console.log('Game over!');
-        }
-    });
+function gameOver(gameWon) {
+	for (let index of winCombos[gameWon.index]) {
+		document.getElementById(index).style.backgroundColor =
+			gameWon.player == huPlayer ? "blue" : "red";
+	}
+	for (var i = 0; i < cells.length; i++) {
+		cells[i].removeEventListener('click', turnClick, false);
+	}
+	declareWinner(gameWon.player == huPlayer ? "You win!" : "You lose.");
 }
 
-var buttonArray = document.querySelectorAll('.simonButton');
-    buttonArray.forEach(function(button) {
-    button.addEventListener('click', function() {
-        button.classList.add('active');
-    });
-});
-
-var currentIndex = 0; 
-
-function handleButtonClick(event) {
-    event.target.classList.add('active');
-    setTimeout(function() {
-        event.target.classList.remove('active');
-    }, 1000);
-};
-
-simonTurn();
-__________________________________________
-const green = document.querySelector('.top-left-panel');
-const yellow = document.querySelector('.top-right-panel');
-const red = document.querySelector('.bottom-left-panel');
-const blue = document.querySelector('.bottom-right-panel');
-const buttons = [
-    document.getElementById('red'),
-    document.getElementById('blue'),
-    document.getElementById('green'),
-    document.getElementById('yellow')
-];
-
-
-var simonSequence = [];
-var playerSequence = [];
-
-function simonTurn() {
-    var color = ['red', 'blue', 'green', 'yellow'];
-    var randomColor = color[Math.floor(Math.random() * color.length)];
-    simonSequence.push(randomColor);
-    console.log("Simon's sequence:", simonSequence);
-    displaySequence();
+function declareWinner(who) {
+	document.querySelector(".endgame").style.display = "block";
+	document.querySelector(".endgame .text").innerText = who;
 }
 
-async function displaySequence() {
-    for (let color of simonSequence) {
-        let panel;
-        switch (color) {
-            case 'red':
-                panel = red;
-                break;
-            case 'blue':
-                panel = blue;
-                break;
-            case 'green':
-                panel = green;
-                break;
-            case 'yellow':
-                panel = yellow;
-                break;
-        }
-        await flash(panel);
-        await delay(1000);
-    }
+function emptySquares() {
+	return origBoard.filter(s => typeof s == 'number');
 }
 
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+function bestSpot() {
+	return minimax(origBoard, aiPlayer).index;
 }
 
-const flash = (panel) => {
-    return new Promise((resolve, reject) => {
-        panel.classList.add('active');
-        setTimeout(() => {
-            panel.classList.remove('active');
-            resolve();
-        }, 1000);
-    });
+function checkTie() {
+	if (emptySquares().length == 0) {
+		for (var i = 0; i < cells.length; i++) {
+			cells[i].style.backgroundColor = "green";
+			cells[i].removeEventListener('click', turnClick, false);
+		}
+		declareWinner("Tie Game!")
+		return true;
+	}
+	return false;
 }
 
-function checkSequence() {
-    for (var i = 0; i < playerSequence.length; i++) {
-        if (playerSequence[i] !== simonSequence[i]) {
-            return false;
-        }
-    }
-    return true;
+function minimax(newBoard, player) {
+	var availSpots = emptySquares();
+
+	if (checkWin(newBoard, huPlayer)) {
+		return {score: -10};
+	} else if (checkWin(newBoard, aiPlayer)) {
+		return {score: 10};
+	} else if (availSpots.length === 0) {
+		return {score: 0};
+	}
+	var moves = [];
+	for (var i = 0; i < availSpots.length; i++) {
+		var move = {};
+		move.index = newBoard[availSpots[i]];
+		newBoard[availSpots[i]] = player;
+
+		if (player == aiPlayer) {
+			var result = minimax(newBoard, huPlayer);
+			move.score = result.score;
+		} else {
+			var result = minimax(newBoard, aiPlayer);
+			move.score = result.score;
+		}
+
+		newBoard[availSpots[i]] = move.index;
+
+		moves.push(move);
+	}
+
+	var bestMove;
+	if(player === aiPlayer) {
+		var bestScore = -10000;
+		for(var i = 0; i < moves.length; i++) {
+			if (moves[i].score > bestScore) {
+				bestScore = moves[i].score;
+				bestMove = i;
+			}
+		}
+	} else {
+		var bestScore = 10000;
+		for(var i = 0; i < moves.length; i++) {
+			if (moves[i].score < bestScore) {
+				bestScore = moves[i].score;
+				bestMove = i;
+			}
+		}
+	}
+
+	return moves[bestMove];
 }
-
-for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', function() {
-        var clickedColor = this.id;
-        playerSequence.push(clickedColor);
-        console.log("Player's sequence:", playerSequence);
-        if (checkSequence()) {
-            if (playerSequence.length === simonSequence.length) {
-                console.log("Correct sequence! Continuing the game.");
-                playerSequence = [];
-                setTimeout(simonTurn, 1000);
-            }
-        } else {
-            console.log('Game over!');
-        }
-    });
-}
-
-simonTurn();
-
-const green = document.querySelector('.top-left-panel');
-const yellow = document.querySelector('.top-right-panel');
-const red = document.querySelector('.bottom-left-panel');
-const blue = document.querySelector('.bottom-right-panel');
-const buttons = [
-    document.getElementById('red'),
-    document.getElementById('blue'),
-    document.getElementById('green'),
-    document.getElementById('yellow')
-];
-
-
-var simonSequence = [];
-var playerSequence = [];
-
-function simonTurn() {
-    var color = ['red', 'blue', 'green', 'yellow'];
-    var randomColor = color[Math.floor(Math.random() * color.length)];
-    simonSequence.push(randomColor);
-    console.log("Simon's sequence:", simonSequence);
-    displaySequence();
-}
-
-async function displaySequence() {
-    for (let color of simonSequence) {
-        let panel;
-        switch (color) {
-            case 'red':
-                panel = red;
-                break;
-            case 'blue':
-                panel = blue;
-                break;
-            case 'green':
-                panel = green;
-                break;
-            case 'yellow':
-                panel = yellow;
-                break;
-        }
-        await flash(panel);
-        await delay(1000);
-    }
-}
-
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-const flash = (panel) => {
-    return new Promise((resolve, reject) => {
-        panel.classList.add('active');
-        setTimeout(() => {
-            panel.classList.remove('active');
-            resolve();
-        }, 1000);
-    });
-}
-
-function checkSequence() {
-    for (var i = 0; i < playerSequence.length; i++) {
-        if (playerSequence[i] !== simonSequence[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
-for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', function() {
-        var clickedColor = this.id;
-        playerSequence.push(clickedColor);
-        console.log("Player's sequence:", playerSequence);
-        if (checkSequence()) {
-            if (playerSequence.length === simonSequence.length) {
-                console.log("Correct sequence! Continuing the game.");
-                playerSequence = [];
-                setTimeout(simonTurn, 1000);
-            }
-        } else {
-            console.log('Game over!');
-        }
-    });
-}
-
-simonTurn();
