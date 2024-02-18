@@ -14,7 +14,7 @@ function simonTurn() {
     var randomColor = color[Math.floor(Math.random() * color.length)];
     //pushes it to the array so it grows by one each of simon's turn
     simonSequence.push(randomColor);
-    console.log("Simon's sequence:", simonSequence);
+    
     displaySequence();
 }
 
@@ -100,7 +100,6 @@ for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', function() {
         var clickedColor = this.id;
         playerSequence.push(clickedColor);
-        console.log("Player's sequence:", playerSequence);
 
         // Play corresponding sound
         switch (clickedColor) {
