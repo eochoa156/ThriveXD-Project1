@@ -89,19 +89,19 @@ table {
     box-shadow: 0 0 10px white;
 }
 #green.active {
-    filter: brightness(200%); /* Apply brightness increase for green panel */
+    filter: brightness(200%);
 }
 
 #yellow.active {
-    filter: brightness(200%); /* Apply brightness increase for yellow panel */
+    filter: brightness(200%);
 }
 
 #red.active {
-    filter: brightness(200%); /* Apply brightness increase for red panel */
+    filter: brightness(200%);
 }
 
 #blue.active {
-    filter: brightness(200%); /* Apply brightness increase for blue panel */
+    background-color: rgb(49, 49, 255);
 }
 .top-panels {
     display: flex;
