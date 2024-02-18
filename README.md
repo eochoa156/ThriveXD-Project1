@@ -18,7 +18,7 @@ for the simon game there is a innitial boop soun when you load up the page id li
 the blue button is alos not changing color as drastically as id like so i would change the color more
 id also like to add in a best score feature so the user would have incentive to play the game more.
 A weird thing i found is that the h2 element doesnt go above the gamepad, with more time id spend time to figure out what happened.
-also if you look in the console you can see the computer sequence
+also i want it to be where the player cannot click wjil he simon sequence is happening
 
 Overall for the game id like to add more games.
 Make the home page more personalized and show the rules before each game insead of the home screen
