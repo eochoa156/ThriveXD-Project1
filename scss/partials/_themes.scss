@@ -1,0 +1,13 @@
+$themes: (light, dark);
+
+@each $theme in $themes {
+  .#{$theme}-theme {
+    @if $theme == light {
+      background-color: $light-color;
+      color: $primary-color;
+    } @else if $theme == dark {
+      background-color: $primary-color;
+      color: $light-color;
+    }
+  }
+}

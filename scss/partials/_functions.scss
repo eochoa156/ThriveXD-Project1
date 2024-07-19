@@ -1,0 +1,8 @@
+@function calculate-rem($size) {
+    @return $size / 16 * 1rem;
+  }
+  
+  @function spacing($factor) {
+    @return $spacing-unit * $factor;
+  }
+  

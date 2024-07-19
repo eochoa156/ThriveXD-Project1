@@ -1,0 +1,25 @@
+.hero {
+    background-image: url('../images/hero.jpg');
+    background-size: cover;
+    text-align: center;
+    padding: 4rem 2rem;
+  
+    &-content {
+      max-width: 600px;
+      margin: 0 auto;
+  
+      h1 {
+        @include responsive-font-size(2rem, 3rem);
+        margin-bottom: 1rem;
+      }
+  
+      p {
+        @include responsive-font-size(1rem, 1.5rem);
+      }
+  
+      .btn {
+        @include button-style(white, $primary-color);
+      }
+    }
+  }
+  
